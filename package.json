@@ -2,10 +2,13 @@
   "name": "send",
   "version": "0.0.1",
   "description": "Send is a CLI tool to instantly share files, folders, and links with mobile devices using QR codes - without the need for an external app",
-  "main": "bin/index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node bin/index.js"
+    "start": "bun run src/index.ts",
+    "dev": "bun run src/index.ts",
+    "build": "bun build src/index.ts --outdir dist --target node",
+    "ts": "tsc --noEmit"
   },
   "keywords": [
     "cli",
@@ -25,9 +28,14 @@
     "wireless transfer"
   ],
   "bin": {
-    "sharing": "./bin/index.js",
-    "easy-sharing": "./bin/index.js"
+    "sharing": "./dist/index.js",
+    "easy-sharing": "./dist/index.js"
   },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "author": "koushik yemula",
   "license": "MIT",
   "preferGlobal": true,
@@ -43,10 +51,29 @@
     "clipboardy": "^3.0.0",
     "express": "^4.18.1",
     "express-basic-auth": "^1.2.1",
-    "express-fileupload": "^1.4.0",
+    "multer": "^1.4.5-lts.1",
     "portfinder": "^1.0.32",
     "qrcode-terminal": "^0.12.0",
-    "serve-handler": "github:parvardegr/serve-handler#feature/support-url-prefix",
-    "yargs": "^17.6.0"
+    "yargs": "^17.6.0",
+    "chalk": "^4.1.2",
+    "ora": "^5.4.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.17",
+    "@types/multer": "^1.4.7",
+    "@types/node": "^20.0.0",
+    "@types/yargs": "^17.0.24",
+    "@types/jest": "^29.5.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.42.0",
+    "jest": "^29.5.0",
+    "rimraf": "^5.0.0",
+    "ts-jest": "^29.1.0",
+    "ts-node": "^10.9.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
   }
 }
