@@ -1,6 +1,7 @@
 import http from "http";
+import { Config } from "./types";
 
-module.exports = {
+const config: Config = {
   debug: false,
   qrcode: {
     small: true,
@@ -19,3 +20,5 @@ module.exports = {
     stopPort: 8000,
   },
 };
+
+export default config;
