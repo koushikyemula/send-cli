@@ -1,6 +1,6 @@
 {
   "name": "send-cli",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "type": "module",
   "description": "Send is a CLI tool to instantly share files, folders, and links with mobile devices using QR codes - without the need for an external app",
   "main": "dist/index.js",
