@@ -14,6 +14,10 @@ import { debugLog, getNetworkAddress, isValidUrl } from "./utils";
 const usage = `
 Usage:
 • Share file or directory
+$ send [options] <path>
+
+Examples:
+• Share file or directory
 $ send /path/to/file-or-directory
 
 • Share clipboard
@@ -22,16 +26,26 @@ $ send -c
 • Share URL
 $ send --url https://example.com
 
-• Receive file
-$ send /destination/directory --receive
+• Receive files
+$ send --receive /destination/directory
 
-• Share file with Basic Authentication
-$ send /path/to/file-or-directory -u user -p password  # also works with --receive`;
+• Share with authentication
+$ send -u user -p password /path/to/file-or-directory
+
+• Share with custom port
+$ send --port 8080 /path/to/file-or-directory
+
+• Receive with authentication
+$ send --receive -u user -p password /destination/directory`;
 
 (async () => {
   const options = await yargs(hideBin(process.argv))
     .usage(usage)
-    .option("debug", { describe: "enable debuging logs", demandOption: false })
+    .option("debug", {
+      describe: "enable debuging logs",
+      type: "boolean",
+      demandOption: false,
+    })
     .option("port", {
       describe: "Change default port",
       demandOption: false,
@@ -43,6 +57,7 @@ $ send /path/to/file-or-directory -u user -p password  # also works with --recei
     .option("c", {
       alias: "clipboard",
       describe: "Share Clipboard",
+      type: "boolean",
       demandOption: false,
     })
     .option("url", {
@@ -57,11 +72,13 @@ $ send /path/to/file-or-directory -u user -p password  # also works with --recei
     .option("w", {
       alias: "on-windows-native-terminal",
       describe: "Enable QR-Code support for windows native terminal",
+      type: "boolean",
       demandOption: false,
     })
     .option("r", {
       alias: "receive",
       describe: "Receive files",
+      type: "boolean",
       demandOption: false,
     })
     .option("u", {
@@ -78,6 +95,7 @@ $ send /path/to/file-or-directory -u user -p password  # also works with --recei
     .option("s", {
       alias: "ssl",
       describe: "Enable https",
+      type: "boolean",
       demandOption: false,
     })
     .option("cert", {
@@ -156,6 +174,10 @@ $ send /path/to/file-or-directory -u user -p password  # also works with --recei
     await updateClipboardData();
   } else {
     path = String(options._[0]);
+
+    if (path === "undefined" && options._.length === 0) {
+      path = undefined;
+    }
   }
 
   if (options.url) {

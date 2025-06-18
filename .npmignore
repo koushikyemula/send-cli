@@ -1,0 +1,41 @@
+# Source files
+src/
+tsconfig.json
+bun.lock
+
+# Development files
+.git/
+.gitignore
+*.log
+npm-debug.log*
+.DS_Store
+
+# Documentation (except README)
+PUBLISHING.md
+*.md
+!README.md
+
+# Test files
+test/
+tests/
+*.test.js
+*.test.ts
+*.spec.js
+*.spec.ts
+
+# Development dependencies
+node_modules/
+
+# Build artifacts (keep only what's needed)
+!dist/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environment files
+.env
+.env.local
+.env.*.local

@@ -1,5 +1,5 @@
 {
-  "name": "send",
+  "name": "send-cli",
   "version": "0.0.1",
   "type": "module",
   "description": "Send is a CLI tool to instantly share files, folders, and links with mobile devices using QR codes - without the need for an external app",
@@ -41,12 +41,12 @@
   "preferGlobal": true,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/koushikyemula/send.git"
+    "url": "git+https://github.com/koushikyemula/send-cli.git"
   },
   "bugs": {
-    "url": "https://github.com/koushikyemula/send/issues"
+    "url": "https://github.com/koushikyemula/send-cli/issues"
   },
-  "homepage": "https://github.com/koushikyemula/send#readme",
+  "homepage": "https://github.com/koushikyemula/send-cli#readme",
   "dependencies": {
     "@types/express-fileupload": "^1.5.1",
     "@types/qrcode-terminal": "^0.12.2",
