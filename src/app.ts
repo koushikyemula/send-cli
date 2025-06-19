@@ -4,6 +4,7 @@ import basicAuth from "express-basic-auth";
 import handler from "serve-handler";
 import fs from "fs";
 import _path from "path";
+import { fileURLToPath } from "url";
 import config from "./config";
 import { debugLog } from "./utils";
 import http from "http";
@@ -39,7 +40,14 @@ const start = ({
     app.use(fileUpload());
 
     app.get("/receive", (_req, res) => {
-      const form = fs.readFileSync(`${__dirname}/templates/upload-form.html`);
+      const currentDir = _path.dirname(fileURLToPath(import.meta.url));
+      const templatePath = _path.join(
+        currentDir,
+        "templates",
+        "upload-form.html"
+      );
+
+      const form = fs.readFileSync(templatePath);
       res.send(form.toString().replace(/\{shareAddress\}/, sendAddress));
     });
 
@@ -81,6 +89,7 @@ const start = ({
             window.location.href = '${postUploadRedirectUrl}';
           </script>
         `);
+        return res.status(200).send("File uploaded successfully");
       } catch (err) {
         console.error("Upload error:", err);
         return res.status(500).send(`Upload failed: ${err}`);
@@ -100,6 +109,7 @@ const start = ({
         clipboard.default.writeSync(url);
 
         console.log(`URL received and copied to clipboard: ${url}`);
+        return res.status(200).send("URL copied to clipboard");
       } catch (err) {
         console.error("URL share error:", err);
         return res.status(500).send(`Failed to copy URL: ${err}`);

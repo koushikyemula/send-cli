@@ -1,4 +1,5 @@
 import os from "node:os";
+import _path from "path";
 import config from "./config";
 
 const getNetworkAddress = (): string | undefined => {
@@ -25,4 +26,11 @@ function isValidUrl(urlString: string) {
   }
 }
 
-export { getNetworkAddress, debugLog, isValidUrl };
+const expandTildePath = (filePath: string): string => {
+  if (filePath.startsWith("~/") || filePath === "~") {
+    return _path.join(os.homedir(), filePath.slice(1));
+  }
+  return filePath;
+};
+
+export { getNetworkAddress, debugLog, isValidUrl, expandTildePath };

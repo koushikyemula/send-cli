@@ -8,7 +8,7 @@
   "scripts": {
     "start": "bun run src/index.ts",
     "dev": "bun run src/index.ts",
-    "build": "bun build src/index.ts --outdir dist --target node",
+    "build": "bun build src/index.ts --outdir dist --target node && cp -r src/templates dist/",
     "ts": "tsc --noEmit"
   },
   "keywords": [

@@ -9,7 +9,12 @@ import qrcode from "qrcode-terminal";
 import portfinder from "portfinder";
 import app from "./app";
 import config from "./config";
-import { debugLog, getNetworkAddress, isValidUrl } from "./utils";
+import {
+  debugLog,
+  getNetworkAddress,
+  isValidUrl,
+  expandTildePath,
+} from "./utils";
 
 const usage = `
 Usage:
@@ -158,9 +163,9 @@ $ send --receive -u user -p password /destination/directory`;
     }
     debugLog(`clipboard file path:\n ${filePath}`);
 
-    if (fs.existsSync(filePath)) {
+    if (fs.existsSync(expandTildePath(filePath))) {
       debugLog(`clipboard file ${filePath} found`);
-      path = filePath;
+      path = expandTildePath(filePath);
     } else {
       const outPath = options.t
         ? _path.join(String(options.t), ".clipboard-tmp")
@@ -177,6 +182,8 @@ $ send --receive -u user -p password /destination/directory`;
 
     if (path === "undefined" && options._.length === 0) {
       path = undefined;
+    } else if (path && path !== "undefined") {
+      path = expandTildePath(path);
     }
   }
 
