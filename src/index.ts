@@ -16,6 +16,11 @@ import {
   expandTildePath,
 } from "./utils";
 
+const packageJson = JSON.parse(
+  fs.readFileSync(_path.join(__dirname, "../package.json"), "utf8")
+);
+const version = packageJson.version;
+
 const usage = `
 Usage:
 • Share file or directory
@@ -46,6 +51,7 @@ $ send --receive -u user -p password /destination/directory`;
 (async () => {
   const options = await yargs(hideBin(process.argv))
     .usage(usage)
+    .version(version)
     .option("debug", {
       describe: "enable debuging logs",
       type: "boolean",
