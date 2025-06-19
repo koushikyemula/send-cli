@@ -29,10 +29,11 @@
     "wireless transfer"
   ],
   "bin": {
-    "send": "./dist/index.js"
+    "send": "./bin/send"
   },
   "files": [
     "dist",
+    "bin",
     "README.md",
     "LICENSE"
   ],

@@ -1,8 +1,10 @@
-#! /usr/bin/env node
+#!/usr/bin/env node
 
 import fs from "fs";
 import https from "https";
 import _path from "path";
+import os from "os";
+import { fileURLToPath } from "url";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import qrcode from "qrcode-terminal";
@@ -16,8 +18,9 @@ import {
   expandTildePath,
 } from "./utils";
 
+const currentDir = _path.dirname(fileURLToPath(import.meta.url));
 const packageJson = JSON.parse(
-  fs.readFileSync(_path.join(__dirname, "../package.json"), "utf8")
+  fs.readFileSync(_path.join(currentDir, "../package.json"), "utf8")
 );
 const version = packageJson.version;
 
@@ -146,8 +149,8 @@ $ send --receive -u user -p password /destination/directory`;
       protocolModule: https,
       protocol: "https",
       option: {
-        key: fs.readFileSync(_path.resolve(__dirname, String(options.key))),
-        cert: fs.readFileSync(_path.resolve(__dirname, String(options.cert))),
+        key: fs.readFileSync(_path.resolve(String(options.key))),
+        cert: fs.readFileSync(_path.resolve(String(options.cert))),
       },
     };
   }
@@ -175,7 +178,7 @@ $ send --receive -u user -p password /destination/directory`;
     } else {
       const outPath = options.t
         ? _path.join(String(options.t), ".clipboard-tmp")
-        : ".clipboard-tmp";
+        : _path.join(os.tmpdir(), ".clipboard-tmp");
       fs.writeFileSync(outPath, data);
       path = _path.resolve(outPath);
     }
