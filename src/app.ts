@@ -89,7 +89,6 @@ const start = ({
             window.location.href = '${postUploadRedirectUrl}';
           </script>
         `);
-        return res.status(200).send("File uploaded successfully");
       } catch (err) {
         console.error("Upload error:", err);
         return res.status(500).send(`Upload failed: ${err}`);
@@ -109,7 +108,6 @@ const start = ({
         clipboard.default.writeSync(url);
 
         console.log(`URL received and copied to clipboard: ${url}`);
-        return res.status(200).send("URL copied to clipboard");
       } catch (err) {
         console.error("URL share error:", err);
         return res.status(500).send(`Failed to copy URL: ${err}`);

@@ -1,2 +1,4 @@
 *.html linguist-documentation
 *.js linguist-language=TypeScript
+
+bin/send linguist-language=TypeScript
