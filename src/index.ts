@@ -141,7 +141,7 @@ $ send --receive -u user -p password /destination/directory`;
   }
 
   let path: string | undefined = undefined;
-  let fileName: string | undefined = undefined;
+  let fileName: string = "";
 
   if (options.s) {
     if (!options.cert) {
@@ -231,7 +231,7 @@ $ send --receive -u user -p password /destination/directory`;
 
   if (options.d && fs.lstatSync(path).isDirectory()) {
     console.log(
-      "Error: -d (download) flag doesn't work with directories. It only works with files."
+      "Invalid option: -d (download) flag doesn't work with directories. It only works with files."
     );
     process.exit(1);
   }
@@ -291,5 +291,6 @@ $ send --receive -u user -p password /destination/directory`;
     postUploadRedirectUrl: uploadAddress,
     sendAddress,
     download: Boolean(options.d),
+    fileName,
   });
 })();

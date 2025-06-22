@@ -10,6 +10,7 @@ interface StartOptions {
   postUploadRedirectUrl: string;
   sendAddress: string;
   download: boolean;
+  fileName?: string;
 }
 
 interface Config {
