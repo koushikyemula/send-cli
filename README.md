@@ -43,6 +43,9 @@ send /path/to/file.pdf
 # Share a directory
 send /path/to/folder
 
+# Share with direct download enabled
+send -d /path/to/file
+
 # Share clipboard content
 send -c
 
@@ -84,6 +87,7 @@ send --debug /path/to/file
 | `--cert <path>`                |       | Path to SSL certificate file               |
 | `--key <path>`                 |       | Path to SSL key file                       |
 | `--tmpdir <path>`              | `-t`  | Clipboard temporary files directory        |
+| `--download`                   | `-d`  | Enable direct download for files           |
 | `--on-windows-native-terminal` | `-w`  | Enable QR-Code for Windows native terminal |
 | `--debug`                      |       | Enable debug logs                          |
 | `--help`                       |       | Show help                                  |

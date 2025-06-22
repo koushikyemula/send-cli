@@ -20,6 +20,7 @@ const start = ({
   onStart,
   postUploadRedirectUrl,
   sendAddress,
+  download,
 }: StartOptions) => {
   const app = express();
 
@@ -91,7 +92,8 @@ const start = ({
         `);
       } catch (err) {
         console.error("Upload error:", err);
-        return res.status(500).send(`Upload failed: ${err}`);
+        res.status(500).send(`Upload failed: ${err}`);
+        return;
       }
     });
 
@@ -108,17 +110,41 @@ const start = ({
         clipboard.default.writeSync(url);
 
         console.log(`URL received and copied to clipboard: ${url}`);
+        res.status(200).send("URL copied to clipboard successfully.");
       } catch (err) {
         console.error("URL share error:", err);
-        return res.status(500).send(`Failed to copy URL: ${err}`);
+        res.status(500).send(`Failed to copy URL: ${err}`);
+        return;
       }
     });
   }
-
   app.use("/send", async (req, res) => {
     if (clipboard) {
       await updateClipboardData();
     }
+
+    // Handle direct download for files
+    if (download && req.path && req.path !== '/') {
+      const requestedFile = _path.join(path, decodeURIComponent(req.path));
+      
+      try {
+        const stats = fs.statSync(requestedFile);
+        if (stats.isFile()) {
+          const fileName = _path.basename(requestedFile);
+          res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`);
+          res.setHeader('Content-Type', 'application/octet-stream');
+          res.setHeader('Content-Length', stats.size);
+          
+          const fileStream = fs.createReadStream(requestedFile);
+          fileStream.pipe(res);
+          return;
+        }
+      } catch (err) {
+        debugLog(`Direct download error: ${err}`);
+        // Fall through to serve-handler if file not found or other error
+      }
+    }
+
     handler(req, res, { public: path, etag: true });
   });
 
