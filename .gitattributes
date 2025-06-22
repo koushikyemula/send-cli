@@ -1,4 +1,8 @@
 *.html linguist-documentation
 *.js linguist-language=TypeScript
 
+dist/ linguist-generated=true
+
+dist/*.js linguist-language=TypeScript
+
 bin/send linguist-language=TypeScript
