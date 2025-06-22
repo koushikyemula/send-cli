@@ -9,6 +9,7 @@ interface StartOptions {
   onStart: () => void;
   postUploadRedirectUrl: string;
   sendAddress: string;
+  download: boolean;
 }
 
 interface Config {

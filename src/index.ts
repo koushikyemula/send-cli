@@ -33,6 +33,9 @@ Examples:
 • Share file or directory
 $ send /path/to/file-or-directory
 
+• Share with direct download enabled
+$ send -d /path/to/file-or-directory
+
 • Share clipboard
 $ send -c
 
@@ -118,6 +121,12 @@ $ send --receive -u user -p password /destination/directory`;
     })
     .option("key", {
       describe: "Path to ssl key file",
+      demandOption: false,
+    })
+    .option("d", {
+      alias: "download",
+      describe: "Enable direct download for files",
+      type: "boolean",
       demandOption: false,
     })
     .help(true).argv;
@@ -274,5 +283,6 @@ $ send --receive -u user -p password /destination/directory`;
     onStart,
     postUploadRedirectUrl: uploadAddress,
     sendAddress,
+    download: Boolean(options.d),
   });
 })();
