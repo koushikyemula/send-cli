@@ -177,8 +177,8 @@ $ send --receive -u user -p password /destination/directory`;
       path = expandTildePath(filePath);
     } else {
       const outPath = options.t
-        ? _path.join(String(options.t), ".clipboard-tmp")
-        : _path.join(os.tmpdir(), ".clipboard-tmp");
+        ? _path.join(String(options.t), "clipboard-content.txt")
+        : _path.join(os.tmpdir(), "clipboard-content.txt");
       fs.writeFileSync(outPath, data);
       path = _path.resolve(outPath);
     }

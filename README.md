@@ -1,18 +1,21 @@
 # Send CLI
 
-> Instantly share files, folders, and links with mobile devices using QR codes - no external app required!
+> Instantly share files, folders, and links between mobile and desktop using QR codes - no external app required!
 
 [![npm version](https://badge.fury.io/js/send-cli.svg)](https://badge.fury.io/js/send-cli)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+## Requirement
+
+**Both devices must be connected to the same network (WiFi/LAN) for this to work.**
 
 ## Features
 
 - **QR Code sharing** - Share files, folders, and URLs instantly with mobile devices
 - **No app required** - Works directly in mobile browsers
-- **Optional authentication** - Secure your shared content with username/password
 - **File upload** - Receive files from mobile devices to your computer
 - **Clipboard sharing** - Share your clipboard content instantly
-- **HTTPS support** - Secure connections with SSL certificates
+- **Optional authentication** - Secure your shared content with username/password
 - **Cross-platform** - Works on Windows, macOS, and Linux
 
 ## Installation
