@@ -123,25 +123,32 @@ const start = ({
       await updateClipboardData();
     }
 
-    // Handle direct download for files
-    if (download && req.path && req.path !== '/') {
-      const requestedFile = _path.join(path, decodeURIComponent(req.path));
-      
+    if (download && req.path && req.path !== "/") {
+      const requestedPath = decodeURIComponent(req.path);
+      const requestedFile = _path.join(path, requestedPath.substring(1));
+
       try {
         const stats = fs.statSync(requestedFile);
         if (stats.isFile()) {
-          const fileName = _path.basename(requestedFile);
-          res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`);
-          res.setHeader('Content-Type', 'application/octet-stream');
-          res.setHeader('Content-Length', stats.size);
-          
-          const fileStream = fs.createReadStream(requestedFile);
-          fileStream.pipe(res);
-          return;
+          const url = new URL(req.url, `http://${req.headers.host}`);
+          const urlFileName = url.searchParams.get("file");
+
+          if (urlFileName && requestedPath === `/${urlFileName}`) {
+            const fileName = _path.basename(requestedFile);
+            res.setHeader(
+              "Content-Disposition",
+              `attachment; filename="${fileName}"`
+            );
+            res.setHeader("Content-Type", "application/octet-stream");
+            res.setHeader("Content-Length", stats.size);
+
+            const fileStream = fs.createReadStream(requestedFile);
+            fileStream.pipe(res);
+            return;
+          }
         }
       } catch (err) {
-        debugLog(`Direct download error: ${err}`);
-        // Fall through to serve-handler if file not found or other error
+        debugLog(`Direct download check error: ${err}`);
       }
     }
 

@@ -229,6 +229,13 @@ $ send --receive -u user -p password /destination/directory`;
     process.exit(1);
   }
 
+  if (options.d && fs.lstatSync(path).isDirectory()) {
+    console.log(
+      "Error: -d (download) flag doesn't work with directories. It only works with files."
+    );
+    process.exit(1);
+  }
+
   if (path && fs.lstatSync(path).isFile()) {
     let trailingSlash = path.lastIndexOf("/") > -1 ? "/" : "\\";
     fileName = _path.basename(path);
